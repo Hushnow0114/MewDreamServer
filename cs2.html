@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .img-box {
+            width: 390px;
+            height: 296px;
+            overflow: hidden;
+        }
+
+        .img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transition: all 1s;
+        }
+
+        .img:hover {
+            transform: scale(1.4);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img-box">
+        <img src="./picture/QQ图片20240103202231.png" class="img">
+</div>
+<div class="img-box">
+    <img src="./picture/QQ图片20240103202232.png" class="img">
+</div>
+
+    <script>
+        var image = document.querySelector('.angled-image');
+        image.addEventListener('mouseover', function () {
+            image.style.animationPlayState = 'paused';
+        });
+
+        image.addEventListener('mouseout', function () {
+            image.style.animationPlayState = 'running';
+        });
+    </script>
+</body>
+
+</html>

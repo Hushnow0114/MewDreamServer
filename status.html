@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <div id="click-effect"></div>
+    <script src="click-effect.js"></script>
+    <title>我的世界服务器信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./font/iconfont.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: auto;
+            background-color: #D1D4DC;
+        }
+
+        .iconfont {
+            font-size: 20px;
+        }
+
+        .menu {
+            position: absolute;
+            width: 60px;
+            height: 600px;
+            background-color: #dce6e400;
+            z-index: 2;
+            top: 0;
+            bottom: 0;
+            left: 10px;
+            margin: auto;
+            border-radius: 0.8rem;
+            transition: 0.3s ease 0.15s;
+            font-family: sans-serif;
+        }
+
+        .menu a {
+            text-decoration: none;
+        }
+
+        .menu .actionsBar {
+            width: 100%;
+            height: 10%;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+
+        .menu .actionsBar div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 0.5rem;
+            transition: 0.3s ease;
+        }
+
+        .menu .actionsBar div button {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            border-radius: 0.5rem;
+            color: #8A7AE8;
+            width: 45px;
+            height: 45px;
+            transition: 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .menu .actionsBar div button:hover {
+            background-color: #302E80;
+            color: #F19FA3;
+
+        }
+
+        .menu .actionsBar div h3 {
+            width: calc(100% - 45px);
+            text-align: center;
+        }
+
+        .menu .optionsBar {
+            overflow: hidden;
+            display: flex;
+            width: 100%;
+            height: 60%;
+            padding: 0 0.5rem;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .menu .optionsBar .menuItem {
+            width: 100%;
+            height: 45px;
+            margin: 0.3rem;
+        }
+
+        .menu .optionsBar .menuItem .menuOption {
+            font-size: 1rem;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 0.5rem;
+            transition: 0.3s ease;
+        }
+
+        .menu .optionsBar .menuItem .menuOption:hover {
+            background-color: #4236C7;
+            color: #F19FA3;
+
+        }
+
+        .menu .optionsBar .menuItem .menuOption:hover i,
+        .menu .optionsBar .menuItem .menuOption:hover h5 {
+            color: #F19FA3;
+
+        }
+
+        .menu .optionsBar .menuItem .menuOption i {
+            width: 45px;
+            text-align: center;
+            color: #8A7AE8;
+        }
+
+        .menu .optionsBar .menuItem .menuOption h5 {
+            width: calc(100% - 45px);
+        }
+
+        .menuText {
+            color: #8A7AE8;
+            transform: translateX(-250px);
+            opacity: 0;
+            transition: transform 0.3s ease 0.1s;
+        }
+
+        .menu .about {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1rem;
+            flex-direction: column;
+            font-family: sans-serif;
+            opacity: 0;
+            white-space: nowrap;
+            transition: 0.3s ease 0.15s;
+        }
+
+        .menu.open {
+            width: 240px;
+        }
+
+        .menuText.open2 {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .menu .menuBreak {
+            width: 100%;
+            height: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu .menuBreak hr {
+            width: 70%;
+            height: 3px;
+            background-color: #8A7AE8;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .menu .themeBar {
+            overflow: hidden;
+            width: 100%;
+            height: 10%;
+            padding: 0.5rem;
+        }
+
+        .menu .themeBar div {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 0.5rem;
+            transition: 0.3s ease;
+        }
+
+        .menu .themeBar div button {
+            background-color: transparent;
+            outline: none;
+            border: none;
+            border-radius: 0.5rem;
+            color: #8A7AE8;
+            width: 100%;
+            height: 45px;
+            transition: 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .menu .themeBar div button:hover {
+            background-color: #364152;
+            color: #F19FA3;
+
+        }
+
+        .menu .menuUser {
+            width: 100%;
+            height: 10%;
+        }
+
+        .menu .menuUser a {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            padding: 0.5rem;
+            position: relative;
+        }
+
+        .menu .menuUser a div {
+            width: 45px;
+            height: 45px;
+            position: relative;
+            border-radius: 0.5rem;
+        }
+
+        .menu .menuUser a div img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0.5rem;
+        }
+
+        .menu .menuUser a .Username {
+            width: calc(70% - 45px);
+        }
+
+        .menu .menuUser a p {
+            width: calc(30% - 45px);
+        }
+
+        .menu .menuUser a:hover p {
+            animation: animArrow 0.3s ease 2;
+            color: #F19FA3;
+
+        }
+
+        @keyframes animArrow {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .menu .menuUser .userInfo {
+            position: absolute;
+            width: 20rem;
+            height: 18rem;
+            opacity: 0;
+            pointer-events: none;
+            top: 34%;
+            left: 1.5rem;
+            transition: 0.3s ease;
+            transform: scale(0);
+            transform-origin: bottom left;
+        }
+
+        .menu .menuUser:hover .userInfo {
+            pointer-events: all;
+            opacity: 1;
+            transform: scale(1);
+            color: #F19FA3;
+
+        }
+
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 400px;
+        }
+
+
+        th,
+        td {
+            padding: 10px;
+            /* background: rgba(255, 255, 255, 0.404);
+  background-image: url(https://api.blogbig.cn/random/api.php); */
+        }
+
+
+        tr:nth-child(even) {
+            background-color: #f2f2f24f;
+        }
+
+        #click-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .effect {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(255, 0, 0, 0.5);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        #text {
+            position: absolute;
+            font-size: 24px;
+            color: red;
+            left: 0;
+            bottom: 0;
+            opacity: 1;
+        }
+
+        td,
+        th {
+            background-color: #f2f2f24f;
+            border: 1px solid #f2f2f24f;
+            padding: 8px;
+            border-style: transparent;
+
+        }
+
+        .center {
+            .container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                /* 假设容器的高度为视口高度 */
+            }
+
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        body {
+            /* background-image: url('https://www.dmoe.cc/random.php'); */
+            background-image: url('https://api.paugram.com/wallpaper/?source=gh');
+            background-color: #cccccc;
+            -webkit-user-select: none;
+            /* Chrome, Safari, Opera */
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #f1f1f1;
+            color: #333;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+
+        // 获取服务器信息并更新表格和标题
+        function updateServerInfo() {
+            $.get("https://api.mcsrvstat.us/2/play.mewdream.top", function (data) {
+                $("#online").text(data.online || "未知");
+                $("#player-count").text(data.players.online + "/" + data.players.max || 0);
+                $("#player-list").text(data.players.list || "未知");
+                $("#version").text(data.version || "未知");
+                $("#name").text(data.hostname + ":" + data.port || "未知");
+                $("#software").text(data.software || "未知");
+                // $("#hostname").text(data.ip+ ":"+data.port ||"未知");
+                $("#hostname").text(data.ip.replace(/(\d+)\.(\d+)\.(\d+)\.(\d+)/, "$1.*.*.$4") + ":" + (data.port || "未知"));
+                $("#icon").text(data.icon || "未知");
+                $("#title").text(data.motd.clean || "未知");
+                $("#protocol").text(data.protocol || "未知");
+                document.title = "我的世界服务器信息 - " + data.players.online + "人在线";
+            });
+        }
+
+        $(document).ready(function () {
+            // 初始化服务器信息
+            updateServerInfo();
+            // 每5秒更新一次服务器信息
+            setInterval(updateServerInfo, 5000);
+        });
+
+    </script>
+
+</head>
+
+<body background=https://api.blogbig.cn/random/api.php style="background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:100% 100%; ">
+    <nav class="menu">
+        <div class="actionsBar">
+            <div>
+                <button id="menuBtn" type="button"><i class="iconfont icon-hanbaocaidan"></i></button>
+                <h3 class="menuText">mewdream</h3>
+            </div>
+        </div>
+        <ul class="optionsBar">
+            <li class="menuItem">
+                <a href="./status.html" class="menuOption">
+                    <i class="iconfont icon-shouye"></i>
+                    <h5 class="menuText">主页</h5>
+                </a>
+            </li>
+            <li class="menuBreak">
+                <hr>
+            </li>
+            <li class="menuItem">
+                <a href="./picture.html">
+                    <button type="button" class="menuOption">
+                        <i class="iconfont icon-tupian"></i>
+                        <h5 class="menuText">Photo album</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="./qr.html">
+                    <button itype="button" class="menuOption">
+                        <i class="iconfont icon-erweima"></i>
+                        <h5 class="menuText">QR code scanning</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="./playername.html">
+                    <button itype="button" class="menuOption">
+                        <i class="iconfont icon-hanbaocaidan"></i>
+                        <h5 class="menuText">工具</h5>
+                    </button>
+                </a>
+            </li>
+            <li class="menuItem">
+                <a href="./about.html">
+                    <button itype="button" class="menuOption">
+                        <i class="iconfont icon-tuichu"></i>
+                        <h5 class="menuText">关于</h5>
+                    </button>
+                </a>
+            </li>
+        </ul>
+        <div class="about" id="about">
+        </div>
+        <div class="menuUser">
+            <a href="#">
+                <div>
+                    <img href="https://s21.ax1x.com/2024/06/05/pkJjBRI.png" alt="Icon">
+                </div>
+                <h5 class="Username menuText">喵萌梦恋</h5>
+                <p class="menuText"><i class="iconfont icon-youjiantou"></i></p>
+            </a>
+        </div>
+        <div class="themeBar">
+            <div>
+                <button type="button"><i class="iconfont icon-tuichu"></i></button>
+            </div>
+        </div>
+    </nav>
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const menu = document.querySelector('.menu');
+        const menuText = document.querySelectorAll('.menuText');
+        menuBtn.addEventListener('click', () => {
+            menu.classList.toggle('open');
+            menuText.forEach(function (text, index) {
+                setTimeout(() => {
+                    text.classList.toggle('open2');
+                }, index * 50);
+            });
+        });
+
+        document.onkeydown = function (e) {
+            if (window.event && window.event.keyCode == 123) {
+                event.keyCode = 0;
+                event.returnValue = false;
+                return false;
+            }
+        };
+        document.oncontextmenu = function (e) {
+            e.preventDefault(); // 阻止默认右键菜单显示
+        };
+
+        // 使用免费的ipify API获取访客的IP地址
+        fetch('https://api.ipify.org/?format=json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip').textContent = data.ip;
+            })
+            .catch(error => console.error(error));
+        function displayTime() {
+            var date = new Date(); // 获取当前时间
+            var time = date.toLocaleTimeString(); // 格式化时间字符串
+
+            // 更新页面上的时间
+            document.getElementById('time').innerHTML = time;
+        }
+
+        // 每一秒调用一次displayTime函数
+        setInterval(displayTime, 1000);
+    </script>
+    <h1 id="server-title" class="vertical-text">服务器信息</h1>
+    <link rel="stylesheet" href="example.css">
+    <div class="container">
+
+        <table>
+            <tr>
+                <th class="center">IP</th>
+                <td id="hostname" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">在线状态</th>
+                <td id="online" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">标题</th>
+                <td id="title" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">人数</th>
+                <td id="player-count" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">在线玩家</th>
+                <td id="player-list" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">版本号</th>
+                <td id="version" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">地址</th>
+                <td id="name" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">协议</th>
+                <td id="protocol" class="center">加载中...</td>
+            </tr>
+            <tr>
+                <th class="center">核心</th>
+                <td id="software" class="center">加载中...</td>
+            </tr>
+
+            <tr>
+                <th>北京时间:</th>
+                <td id="time" class="center">加载中...</td>
+            </tr>
+        </table>
+        <p>您的IP地址是: <span id="ip"></span></p>
+    </div>
+</body>
+<div class="footer">
+    <p>Copyright © 2023-2024 <a href="https://hyverse.top/">Hyverse</a> 版权所有.
+        All Rights Reserved</p>
+</div>
+
+</html>
